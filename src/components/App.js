@@ -1,35 +1,24 @@
-import logo from '../images/logo.svg';
-import avatarPlug from '../images/unnamed.jpg'
-import '../index.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import { useEffect, useState } from 'react';
 
 function App() {
+  // Состояние попапов
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  // Функции открытия/закрытия попапов
+  function handleEditAvatarClick() {
+    document.querySelector('.popup_avatar').classList.add('popup_opened')
+  }
+
   return (
     <div className='page'>
-      <header className='header'>
-        <img src={logo} alt='логотип сайта Mesto' className='header__logo' />
-      </header>
-      <main>
-        <section className='profile'>
-          <div className='profile__avatar-edit'>
-            <img src={avatarPlug} alt='аватар' className='profile__avatar' />
-            <button type='button' className='profile__avatar-edit-button' aria-label='редактировать аватар'></button>
-          </div>
-          <div className='profile__info'>
-            <h1 className='profile__name'>Жак Ив Кусто</h1>
-            <button type='button' className='profile__edit-button' aria-label='редактировать профиль'></button>
-            <p className='profile__job'>Исследователь океана</p>
-          </div>
-          <button type='button' className='profile__add-button' aria-label='добавить фотографии'></button>
-        </section>
-
-        <section className='cards' aria-label='фотокарточки'>
-          <ul className='cards__photo-grid'></ul>
-        </section>
-      </main>
-
-      <footer className='footer'>
-        <p className='footer__copyright'>&copy; 2020 Mesto Russia</p>
-      </footer>
+      <Header />
+      <Main />
+      <Footer />
 
       <div className='popup popup_edit_profile'>
         <div className='popup__info'>
@@ -122,14 +111,6 @@ function App() {
             </button>
           </form>
           <button type='button' className='popup__close-icon' aria-label='закрыть форму'></button>
-        </div>
-      </div>
-
-      <div className='popup popup_view_image'>
-        <div className='popup__wrapper'>
-          <button type='button' className='popup__close-icon' aria-label='закрыть форму'></button>
-          <img src='#' alt='' className='popup__image' />
-          <h3 className='popup__image-title'></h3>
         </div>
       </div>
 
