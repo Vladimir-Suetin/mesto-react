@@ -1,6 +1,6 @@
-function PopupWithForm({ title, name, children }) {
+function PopupWithForm({ title, name, children, isOpen }) {
   return (
-    <div className={`popup popup_type_${name}`}>
+    <div className={`popup popup_type_${name} ${isOpen} && popup_opened`}>
       <div className='popup__info'>
         <h3 className='popup__title'>{title}</h3>
         <form name={`popup-edit_${name}`} className={`popup__container popup__container_edit_${name}`}>
@@ -15,3 +15,5 @@ function PopupWithForm({ title, name, children }) {
     </div>
   );
 }
+
+export default PopupWithForm;

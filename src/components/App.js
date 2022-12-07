@@ -1,6 +1,7 @@
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
+import PopupWithForm from './PopupWithForm';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -11,13 +12,26 @@ function App() {
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
-    document.querySelector('.popup_avatar').classList.add('popup_opened')
+    setIsEditAvatarPopupOpen(true);
+    document.querySelector('.popup_avatar').classList.add('popup_opened');
+  }
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
   }
 
   return (
     <div className='page'>
       <Header />
-      <Main />
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+      />
       <Footer />
 
       <div className='popup popup_edit_profile'>
