@@ -1,7 +1,9 @@
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
+import EditAvatarPopup from './EditAvatarPopup';
+import EditProfilePopup from './EditProfilePopup';
+import AddPlaceImagePopup from './AddPlaceImagePopup';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -13,7 +15,6 @@ function App() {
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
-    document.querySelector('.popup_avatar').classList.add('popup_opened');
   }
 
   function handleEditProfileClick() {
@@ -22,6 +23,12 @@ function App() {
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
   }
 
   return (
@@ -33,6 +40,9 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
       />
       <Footer />
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
+      <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
 
       <div className='popup popup_edit_profile'>
         <div className='popup__info'>
