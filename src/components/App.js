@@ -4,6 +4,8 @@ import Footer from './Footer';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlaceImagePopup from './AddPlaceImagePopup';
+import api from '../utils/api';
+import avatarPlug from '../images/unnamed.jpg';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -11,6 +13,21 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [userName, setUserName] = useState('Жак Ив Кусто');
+  const [userDescription, setUserDescription] = useState('Исследователь океана');
+  const [userAvatar, setUserAvatar] = useState(avatarPlug);
+
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((userData) => {
+        const { name, about: job, avatar, _id } = userData;
+        setUserName(name);
+        setUserDescription(job);
+        setUserAvatar(avatar);
+      })
+      .catch((err) => api.logResponseError(err));
+  });
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
@@ -38,10 +55,13 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        userAvatar={userAvatar}
+        userName={userName}
+        userDescription={userDescription}
       />
       <Footer />
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}/>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
       <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
 
       <div className='popup popup_edit_profile'>
