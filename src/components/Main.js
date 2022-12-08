@@ -1,4 +1,6 @@
-function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription}) {
+import Card from "./Card";
+
+function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards}) {
   return (
     <main>
       <section className='profile'>
@@ -30,7 +32,11 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, us
       </section>
 
       <section className='cards' aria-label='фотокарточки'>
-        <ul className='cards__photo-grid'></ul>
+        <ul className='cards__photo-grid'>
+           {cards.forEach((card) => {
+            (<Card card={card}></Card>)
+           })}
+        </ul>
       </section>
     </main>
   );

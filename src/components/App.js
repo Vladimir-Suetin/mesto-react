@@ -15,6 +15,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [userName, setUserName] = useState('Жак Ив Кусто');
   const [userDescription, setUserDescription] = useState('Исследователь океана');
+  const [cards, setCards] = useState([]);
   const [userAvatar, setUserAvatar] = useState(avatarPlug);
 
   useEffect(() => {
@@ -28,6 +29,15 @@ function App() {
       })
       .catch((err) => api.logResponseError(err));
   });
+
+  useEffect(() => {
+    api
+      .getCards()
+      .then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => api.logResponseError(err));
+  }, [cards])
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
@@ -58,9 +68,10 @@ function App() {
         userAvatar={userAvatar}
         userName={userName}
         userDescription={userDescription}
+        cards={cards}
       />
       <Footer />
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}/>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
       <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
 

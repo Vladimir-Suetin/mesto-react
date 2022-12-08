@@ -15,8 +15,8 @@
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .profile__avatar-edit {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     margin-right: 24px;
   }
 }
