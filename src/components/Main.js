@@ -33,9 +33,9 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, us
 
       <section className='cards' aria-label='фотокарточки'>
         <ul className='cards__photo-grid'>
-           {cards.forEach((card) => {
-            (<Card card={card}></Card>)
-           })}
+           {cards.map(({_id, ...card}) => 
+            (<Card key={_id} {...card}></Card>)
+           )}
         </ul>
       </section>
     </main>

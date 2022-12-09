@@ -19,25 +19,17 @@ function App() {
   const [userAvatar, setUserAvatar] = useState(avatarPlug);
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        const { name, about: job, avatar, _id } = userData;
+    Promise.all([api.getUserInfo(), api.getCards()])
+      .then(([userData, cardsData]) => {
+        const { name, about: job, avatar } = userData;
         setUserName(name);
         setUserDescription(job);
         setUserAvatar(avatar);
-      })
-      .catch((err) => api.logResponseError(err));
-  });
 
-  useEffect(() => {
-    api
-      .getCards()
-      .then((cardsData) => {
         setCards(cardsData);
       })
       .catch((err) => api.logResponseError(err));
-  }, [cards])
+  }, []);
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
@@ -75,7 +67,7 @@ function App() {
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
       <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
 
-      <div className='popup popup_edit_profile'>
+      {/* <div className='popup popup_edit_profile'>
         <div className='popup__info'>
           <h3 className='popup__title'>Редактировать профиль</h3>
           <form name='popup-edit-profile' className='popup__container popup__container_edit-profile'>
@@ -167,9 +159,9 @@ function App() {
           </form>
           <button type='button' className='popup__close-icon' aria-label='закрыть форму'></button>
         </div>
-      </div>
+      </div> */}
 
-      <template className='template-list'>
+      {/* <template className='template-list'>
         <li className='element'>
           <img src='#' alt='' className='element__mask-group' />
           <div className='element__rectangle'>
@@ -181,7 +173,7 @@ function App() {
           </div>
           <button type='button' className='element__button-remove'></button>
         </li>
-      </template>
+      </template> */}
     </div>
   );
 }
