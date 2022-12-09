@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards}) {
+function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards, onCardClick}) {
   return (
     <main>
       <section className='profile'>

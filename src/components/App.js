@@ -4,6 +4,7 @@ import Footer from './Footer';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlaceImagePopup from './AddPlaceImagePopup';
+import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import avatarPlug from '../images/unnamed.jpg';
 import { useEffect, useState } from 'react';
@@ -13,6 +14,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  // const [selectedCard, setSelectedCard] = useState(false);
   const [userName, setUserName] = useState('Жак Ив Кусто');
   const [userDescription, setUserDescription] = useState('Исследователь океана');
   const [cards, setCards] = useState([]);
@@ -44,10 +46,15 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  // function handleCardClick(data) {
+  //   setSelectedCard(data);
+  // }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setCards(false);
   }
 
   return (
@@ -61,11 +68,13 @@ function App() {
         userName={userName}
         userDescription={userDescription}
         cards={cards}
+        // onCardClick={handleCardClick}
       />
       <Footer />
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
       <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
+      {/* <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup> */}
 
       {/* <div className='popup popup_edit_profile'>
         <div className='popup__info'>
