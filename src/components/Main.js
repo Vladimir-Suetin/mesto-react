@@ -1,11 +1,11 @@
-import Card from "./Card";
+import Card from './Card';
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards, onCardClick}) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards, onCardClick }) {
   return (
     <main>
       <section className='profile'>
         <div className='profile__avatar-edit'>
-          <img src={userAvatar} alt='аватар' className='profile__avatar'/>
+          <img src={userAvatar} alt='аватар' className='profile__avatar' />
           <button
             type='button'
             className='profile__avatar-edit-button'
@@ -33,9 +33,9 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, us
 
       <section className='cards' aria-label='фотокарточки'>
         <ul className='cards__photo-grid'>
-           {cards.map(({_id, ...card}) => 
-            (<Card key={_id} {...card}></Card>)
-           )}
+          {cards.map(({ _id, ...card }) => (
+            <Card key={_id} {...card} onCardClick={onCardClick}></Card>
+          ))}
         </ul>
       </section>
     </main>

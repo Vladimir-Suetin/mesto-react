@@ -1,10 +1,10 @@
-function ImagePopup({data, onClose}) {
+function ImagePopup({ card, onClose }) {
   return (
-    <div className={`popup popup_view_image ${data !==null && 'popup_opened'}`} >
+    <div className={`popup popup_view_image ${card.link && 'popup_opened'}`}>
       <div className='popup__wrapper'>
         <button type='button' className='popup__close-icon' aria-label='закрыть форму' onClick={onClose}></button>
-        <img src={data.link} alt={data.name} className='popup__image' />
-        <h3 className='popup__image-title'>{data.name}</h3>
+        <img src={card.link} alt={card.name} className='popup__image' />
+        <h3 className='popup__image-title'>{card.name}</h3>
       </div>
     </div>
   );

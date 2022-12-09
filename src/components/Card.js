@@ -1,7 +1,10 @@
-function Card({ name, link, likes }) {
+function Card({ name, link, likes, onCardClick }) {
+  function handleCardClick() {
+    onCardClick({ name, link });
+  }
   return (
     <li className='element'>
-      <img src={link} alt={name} className='element__mask-group'/>
+      <img src={link} alt={name} className='element__mask-group' onClick={handleCardClick} />
       <div className='element__rectangle'>
         <h2 className='element__title'>{name}</h2>
         <div className='element__likes'>
