@@ -33,8 +33,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, u
 
       <section className='cards' aria-label='фотокарточки'>
         <ul className='cards__photo-grid'>
-          {cards.map(({ _id, ...card }) => (
-            <Card key={_id} {...card} onCardClick={onCardClick}></Card>
+          {cards.map(( card ) => (
+            <Card key={card._id} card={card} onCardClick={onCardClick}></Card>
           ))}
         </ul>
       </section>

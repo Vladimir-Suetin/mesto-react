@@ -1,4 +1,6 @@
-function Card({ name, link, likes, onCardClick }) {
+function Card({ card, onCardClick }) {
+  const {name, link, likes} = card;
+
   function handleCardClick() {
     onCardClick({ name, link });
   }
