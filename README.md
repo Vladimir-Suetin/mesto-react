@@ -9,7 +9,7 @@
 - Описание HTML разметки при помощи расширения синтаксиса JS :small_blue_diamond: **JSX**
 - Применение React хуков :small_blue_diamond: **useState и useEffect**
 
-## `Автор`
+## `Автор :`
 
 **Владимир Суетин** :arrow_right: [Ссылка на профиль GitHub](https://github.com/vladimir-suetin)  
 **Ссылка на проект** :arrow_right: [Mesto React](https://vladimir-suetin.github.io/mesto/)
