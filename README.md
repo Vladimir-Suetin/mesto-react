@@ -12,4 +12,4 @@
 ## `Автор:`
 
 **Владимир Суетин** :arrow_right: [Ссылка на профиль GitHub](https://github.com/vladimir-suetin)  
-**Ссылка на проект** :arrow_right: [Mesto React](https://vladimir-suetin.github.io/mesto/)  
+**Ссылка на проект** :arrow_right: [Mesto React](https://vladimir-suetin.github.io/mesto-react/)  
