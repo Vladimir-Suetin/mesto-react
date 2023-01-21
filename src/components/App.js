@@ -1,3 +1,4 @@
+import React from "react";
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -8,17 +9,25 @@ import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import avatarPlug from '../images/unnamed.jpg';
 import { useEffect, useState } from 'react';
+import CurrentUserContext from '../context/CurrentUserContext'
 
 function App() {
   // Состояние попапов
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  // Карточки
   const [selectedCard, setSelectedCard] = useState({});
+  const [cards, setCards] = useState([]);
+  // Пользователь
   const [userName, setUserName] = useState('Жак Ив Кусто');
   const [userDescription, setUserDescription] = useState('Исследователь океана');
-  const [cards, setCards] = useState([]);
   const [userAvatar, setUserAvatar] = useState(avatarPlug);
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    api.getUserInfo().then(setCurrentUser).catch((err) => api.logResponseError(err));
+  }, [])
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
@@ -58,6 +67,7 @@ function App() {
   }
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className='page'>
       <Header />
       <Main
@@ -76,6 +86,7 @@ function App() {
       <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
       <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

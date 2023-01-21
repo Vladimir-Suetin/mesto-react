@@ -1,6 +1,10 @@
+import React from 'react';
 import Card from './Card';
+import CurrentUserContext from '../context/CurrentUserContext'
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards, onCardClick }) {
+  const userData = React.useContext(CurrentUserContext);
+  console.log(userData)
   return (
     <main>
       <section className='profile'>
