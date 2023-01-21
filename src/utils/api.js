@@ -59,18 +59,26 @@ class Api {
     }).then((res) => this._getResponseData(res));
   }
 
-  setLikes(idCard) {
+  _setLike(idCard) {
     return fetch(`${this._baseUrl}/cards/${idCard}/likes`, {
       method: 'PUT',
       headers: this._headers,
     }).then((res) => this._getResponseData(res));
   }
 
-  deleteLikes(idCard) {
+  _deleteLike(idCard) {
     return fetch(`${this._baseUrl}/cards/${idCard}/likes`, {
       method: 'DELETE',
       headers: this._headers,
     }).then((res) => this._getResponseData(res));
+  }
+
+  changeLikeCardStatus(idCard, isLiked) {
+    if (isLiked) {
+      return this._setLike(idCard);
+    } else {
+      return this._deleteLike(idCard);
+    }
   }
 
   changeAvatar(data) {

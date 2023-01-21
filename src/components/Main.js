@@ -1,15 +1,14 @@
 import React from 'react';
 import Card from './Card';
-import CurrentUserContext from '../context/CurrentUserContext'
+import CurrentUserContext from '../context/CurrentUserContext';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, userDescription, cards, onCardClick }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCardLike }) {
   const userData = React.useContext(CurrentUserContext);
-  console.log(userData)
   return (
     <main>
       <section className='profile'>
         <div className='profile__avatar-edit'>
-          <img src={userAvatar} alt='аватар' className='profile__avatar' />
+          <img src={userData.avatar} alt='аватар' className='profile__avatar' />
           <button
             type='button'
             className='profile__avatar-edit-button'
@@ -18,14 +17,14 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, u
           ></button>
         </div>
         <div className='profile__info'>
-          <h1 className='profile__name'>{userName}</h1>
+          <h1 className='profile__name'>{userData.name}</h1>
           <button
             type='button'
             className='profile__edit-button'
             aria-label='редактировать профиль'
             onClick={onEditProfile}
           ></button>
-          <p className='profile__job'>{userDescription}</p>
+          <p className='profile__job'>{userData.about}</p>
         </div>
         <button
           type='button'
@@ -37,8 +36,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, userAvatar, userName, u
 
       <section className='cards' aria-label='фотокарточки'>
         <ul className='cards__photo-grid'>
-          {cards.map(( card ) => (
-            <Card key={card._id} card={card} onCardClick={onCardClick}></Card>
+          {cards.map((card) => (
+            <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike}></Card>
           ))}
         </ul>
       </section>
