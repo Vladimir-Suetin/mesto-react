@@ -64,6 +64,15 @@ function App() {
       .catch((err) => api.logResponseError(err));
   }
 
+  function handleCardDelete(cardId) {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        setCards(cards.filter((card) => card._id !== cardId));
+      })
+      .catch((err) => api.logResponseError(err));
+  }
+
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -102,6 +111,7 @@ function App() {
           cards={cards}
           onCardLike={handleCardLike}
           onCardClick={handleCardClick}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
