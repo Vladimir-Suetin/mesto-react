@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from './Card';
+import LoadingSpinner from './LoadingSpinner';
 import CurrentUserContext from '../context/CurrentUserContext';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCardLike, onCardDelete }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCardLike, onCardDelete, isLoading, onConfirmDeletion }) {
   const userData = React.useContext(CurrentUserContext);
   return (
     <main>
@@ -36,15 +37,18 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onC
 
       <section className='cards' aria-label='фотокарточки'>
         <ul className='cards__photo-grid'>
-          {cards.map((card) => 
-            {return (<Card
-              key={card._id}
-              card={card}
-              onCardClick={onCardClick}
-              onCardLike={onCardLike}
-              onCardDelete={onCardDelete}
-            ></Card>)}
-          )}
+          {isLoading ? <LoadingSpinner /> : cards.map((card) => {
+            return (
+              <Card
+                key={card._id}
+                card={card}
+                onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
+                onConfirmDeletion={onConfirmDeletion}
+              ></Card>
+            );
+          })}
         </ul>
       </section>
     </main>

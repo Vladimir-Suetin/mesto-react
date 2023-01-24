@@ -10,45 +10,36 @@ import api from '../utils/api';
 import defaultUserData from '../utils/defaultUserData';
 import { useEffect, useState } from 'react';
 import CurrentUserContext from '../context/CurrentUserContext';
+import ConfirmDeletePopup from './ConfirmDeletePopup';
 
 function App() {
   // Состояние попапов
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  // Карточки
+  const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = useState(false);
+
+  // Состояние карточек и данных пользователя
   const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
-  // Пользователь
-  // const [userName, setUserName] = useState('Жак Ив Кусто');
-  // const [userDescription, setUserDescription] = useState('Исследователь океана');
-  // const [userAvatar, setUserAvatar] = useState(avatarPlug);
   const [currentUser, setCurrentUser] = useState(defaultUserData);
 
-  // useEffect(() => {
-  //   api
-  //     .getUserInfo()
-  //     .then((userData) => setCurrentUser(userData))
-  //     .catch((err) => api.logResponseError(err));
-  // }, []);
+  // Состояние загрузки страницы
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Состояние кнопки submit у форм
+  const [submitButtonState, setSubmitButtonState] = useState({ text: '', disabled: false });
+
+  // Получение данных пользователя и карточек
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getCards()])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
+        setIsLoading(!isLoading);
         setCards(cardsData);
       })
       .catch((err) => api.logResponseError(err));
   }, []);
-
-  // useEffect(() => {
-  //   api
-  //     .getCards()
-  //     .then((cardsData) => {
-  //       return setCards(cardsData);
-  //     })
-  //     .catch((err) => api.logResponseError(err));
-  // }, []);
 
   // Функция работы с лайками
   function handleCardLike(card) {
@@ -64,12 +55,13 @@ function App() {
       .catch((err) => api.logResponseError(err));
   }
 
-  // Функция обработчик добавления новой карточки 
+  // Функция обработчик добавления новой карточки
   function handleAddPlaceSubmit(data) {
     api.addNewCard(data).then((newCard) => {
       setCards([newCard, ...cards]);
+      setSubmitButtonState({ text: 'Сохранение...' });
       closeAllPopups();
-    })
+    });
   }
 
   // функция обработчик удаления карточки
@@ -78,6 +70,7 @@ function App() {
       .deleteCard(cardId)
       .then(() => {
         setCards(cards.filter((card) => card._id !== cardId));
+        closeAllPopups();
       })
       .catch((err) => api.logResponseError(err));
   }
@@ -88,6 +81,7 @@ function App() {
       .setUserInfo(data)
       .then((res) => {
         setCurrentUser(res);
+        setSubmitButtonState({ text: 'Сохранение...' });
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err));
@@ -99,6 +93,7 @@ function App() {
       .changeAvatar(data)
       .then((res) => {
         setCurrentUser(res);
+        setSubmitButtonState({ text: 'Сохранение...' });
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err));
@@ -106,19 +101,27 @@ function App() {
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
+    setSubmitButtonState({ text: 'Создать' });
     setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick() {
+    setSubmitButtonState({ text: 'Сохранить' });
     setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
+    setSubmitButtonState({ text: 'Создать' });
     setIsAddPlacePopupOpen(true);
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
+  }
+
+  function handleConfirmDeletion() {
+    setSubmitButtonState({ text: 'Да' });
+    setIsConfirmDeletePopupOpen(true);
   }
 
   function closeAllPopups() {
@@ -136,19 +139,38 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
-          //  userAvatar={userAvatar}
-          //  userName={userName}
-          //  userDescription={userDescription}
           cards={cards}
           onCardLike={handleCardLike}
           onCardClick={handleCardClick}
           onCardDelete={handleCardDelete}
+          onConfirmDeletion={handleConfirmDeletion}
+          isLoading={isLoading}
         />
         <Footer />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-        <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+          submitButton={submitButtonState}
+        />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          submitButton={submitButtonState}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+          submitButton={submitButtonState}
+        />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ConfirmDeletePopup
+          isOpen={isConfirmDeletePopupOpen}
+          onClose={closeAllPopups}
+          submitButton={submitButtonState}
+        />
       </div>
     </CurrentUserContext.Provider>
   );

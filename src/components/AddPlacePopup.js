@@ -1,7 +1,8 @@
+import React from 'react';
 import { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButton }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
@@ -12,13 +13,21 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   function handleChangeLink(evt) {
     setLink(evt.target.value);
   }
+  
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddPlace({name, link})
+    onAddPlace({ name, link });
   }
 
   return (
-    <PopupWithForm title='Новое место' name='add-image' isOpen={isOpen} buttonText={'Создать'} onClose={onClose} onSubmit={handleSubmit}>
+    <PopupWithForm
+      title='Новое место'
+      name='add-image'
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      submitButton={submitButton}
+    >
       <input
         name='image'
         type='text'
