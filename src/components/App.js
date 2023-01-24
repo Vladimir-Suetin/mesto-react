@@ -4,7 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
-import AddPlaceImagePopup from './AddPlaceImagePopup';
+import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import defaultUserData from '../utils/defaultUserData';
@@ -64,6 +64,15 @@ function App() {
       .catch((err) => api.logResponseError(err));
   }
 
+  // Функция обработчик добавления новой карточки 
+  function handleAddPlaceSubmit(data) {
+    api.addNewCard(data).then((newCard) => {
+      setCards([newCard, ...cards]);
+      closeAllPopups();
+    })
+  }
+
+  // функция обработчик удаления карточки
   function handleCardDelete(cardId) {
     api
       .deleteCard(cardId)
@@ -138,8 +147,8 @@ function App() {
         <Footer />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
       </div>
     </CurrentUserContext.Provider>
   );
