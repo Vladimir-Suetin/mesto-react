@@ -73,6 +73,14 @@ function App() {
       .catch((err) => api.logResponseError(err));
   }
 
+  // Функция обработки данных пользователя
+  function handleUpdateUser(data) {
+    api
+      .setUserInfo(data)
+      .then(setCurrentUser)
+      .catch((err) => api.logResponseError(err));
+  }
+
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -115,9 +123,9 @@ function App() {
         />
         <Footer />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
-        <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}></AddPlaceImagePopup>
-        <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </CurrentUserContext.Provider>
   );
