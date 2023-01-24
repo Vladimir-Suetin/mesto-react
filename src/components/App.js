@@ -77,7 +77,21 @@ function App() {
   function handleUpdateUser(data) {
     api
       .setUserInfo(data)
-      .then(setCurrentUser)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => api.logResponseError(err));
+  }
+
+  // Функция обработки аватара
+  function handleUpdateAvatar(data) {
+    api
+      .changeAvatar(data)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
       .catch((err) => api.logResponseError(err));
   }
 
@@ -122,7 +136,7 @@ function App() {
           onCardDelete={handleCardDelete}
         />
         <Footer />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <AddPlaceImagePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
