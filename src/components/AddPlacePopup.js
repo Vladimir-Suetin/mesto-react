@@ -6,6 +6,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+  }, [isOpen]);
+
   function handleChangeName(evt) {
     setName(evt.target.value);
   }
@@ -13,7 +18,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
   function handleChangeLink(evt) {
     setLink(evt.target.value);
   }
-  
+
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddPlace({ name, link });
@@ -31,6 +36,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
       <input
         name='image'
         type='text'
+        value={name}
         className='popup__name-image popup__field popup__name-image_value'
         required
         placeholder='Введите название'
@@ -42,6 +48,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
       <input
         name='link'
         type='url'
+        value={link}
         className='popup__link-image popup__field popup__link-image_value'
         required
         placeholder='Ссылка на картинку'
