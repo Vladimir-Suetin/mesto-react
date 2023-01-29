@@ -36,7 +36,7 @@ function App() {
     Promise.all([api.getUserInfo(), api.getCards()])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
-        setIsLoading(!isLoading);
+        setIsLoading(false);
         setCards(cardsData);
       })
       .catch((err) => api.logResponseError(err));
@@ -62,7 +62,9 @@ function App() {
       setCards([newCard, ...cards]);
       setSubmitButtonState({ text: 'Сохранение...' });
       closeAllPopups();
-    });
+    })
+    .catch((err) => api.logResponseError(err))
+    .finally(() => setSubmitButtonState({ text: 'Создать' }))
   }
 
   // функция обработчик удаления карточки
@@ -74,7 +76,8 @@ function App() {
         setSubmitButtonState({ text: 'Удаление...' });
         closeAllPopups();
       })
-      .catch((err) => api.logResponseError(err));
+      .catch((err) => api.logResponseError(err))
+      .finally(() => setSubmitButtonState({ text: 'Да' }))
   }
 
   // Функция обработки данных пользователя
@@ -86,7 +89,8 @@ function App() {
         setSubmitButtonState({ text: 'Сохранение...' });
         closeAllPopups();
       })
-      .catch((err) => api.logResponseError(err));
+      .catch((err) => api.logResponseError(err))
+      .finally(() => setSubmitButtonState({ text: 'Сохранить' }))
   }
 
   // Функция обработки аватара
@@ -98,22 +102,20 @@ function App() {
         setSubmitButtonState({ text: 'Сохранение...' });
         closeAllPopups();
       })
-      .catch((err) => api.logResponseError(err));
+      .catch((err) => api.logResponseError(err))
+      .finally(() => setSubmitButtonState({ text: 'Создать' }))
   }
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
-    setSubmitButtonState({ text: 'Создать' });
     setIsEditAvatarPopupOpen(true);
   }
 
   function handleEditProfileClick() {
-    setSubmitButtonState({ text: 'Сохранить' });
     setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setSubmitButtonState({ text: 'Создать' });
     setIsAddPlacePopupOpen(true);
   }
 
@@ -122,7 +124,6 @@ function App() {
   }
 
   function handleConfirmDeletion(card) {
-    setSubmitButtonState({ text: 'Да' });
     setIsConfirmDeletePopupOpen(true);
     setRemoveCard(card);
   }
