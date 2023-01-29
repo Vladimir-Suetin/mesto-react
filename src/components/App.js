@@ -23,6 +23,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState(defaultUserData);
+  const [removeCard, setRemoveCard] = useState({})
 
   // Состояние загрузки страницы
   const [isLoading, setIsLoading] = useState(true);
@@ -70,6 +71,7 @@ function App() {
       .deleteCard(cardId)
       .then(() => {
         setCards(cards.filter((card) => card._id !== cardId));
+        setSubmitButtonState({ text: 'Удаление...' });
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err));
@@ -119,16 +121,19 @@ function App() {
     setSelectedCard(card);
   }
 
-  function handleConfirmDeletion() {
+  function handleConfirmDeletion(card) {
     setSubmitButtonState({ text: 'Да' });
     setIsConfirmDeletePopupOpen(true);
+    setRemoveCard(card);
   }
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsConfirmDeletePopupOpen(false);
     setSelectedCard({});
+    setRemoveCard({});
   }
 
   return (
@@ -142,7 +147,6 @@ function App() {
           cards={cards}
           onCardLike={handleCardLike}
           onCardClick={handleCardClick}
-          onCardDelete={handleCardDelete}
           onConfirmDeletion={handleConfirmDeletion}
           isLoading={isLoading}
         />
@@ -151,25 +155,27 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          submitButton={submitButtonState}
+          submitButtonState={submitButtonState}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          submitButton={submitButtonState}
+          submitButtonState={submitButtonState}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          submitButton={submitButtonState}
+          submitButtonState={submitButtonState}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <ConfirmDeletePopup
+        removeCard={removeCard}
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
-          submitButton={submitButtonState}
+          onSubmitButton={handleCardDelete}
+          submitButtonState={submitButtonState}
         />
       </div>
     </CurrentUserContext.Provider>

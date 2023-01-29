@@ -1,11 +1,11 @@
-import './LoadingSpinner.css';
+import '../blocks/loading-spinner/loading-spinner.css';
 
 function loadingSpinner() {
   return (
-    <div className='Spinner'>
-      <div className='Spinner-line one'></div>
-      <div className='Spinner-line two'></div>
-      <div className='Spinner-line three'></div>
+    <div className='spinner'>
+      <div className='spinner-line one'></div>
+      <div className='spinner-line two'></div>
+      <div className='spinner-line three'></div>
     </div>
   );
 }

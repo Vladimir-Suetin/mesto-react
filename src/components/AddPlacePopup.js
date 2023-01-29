@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButton }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
@@ -26,7 +26,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButton }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      submitButton={submitButton}
+      submitButtonState={submitButtonState}
     >
       <input
         name='image'

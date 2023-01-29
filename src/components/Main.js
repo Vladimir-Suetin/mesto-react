@@ -3,7 +3,7 @@ import Card from './Card';
 import LoadingSpinner from './LoadingSpinner';
 import CurrentUserContext from '../context/CurrentUserContext';
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCardLike, onCardDelete, isLoading, onConfirmDeletion }) {
+function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCardLike, isLoading, onConfirmDeletion }) {
   const userData = React.useContext(CurrentUserContext);
   return (
     <main>
@@ -44,7 +44,6 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onC
                 card={card}
                 onCardClick={onCardClick}
                 onCardLike={onCardLike}
-                onCardDelete={onCardDelete}
                 onConfirmDeletion={onConfirmDeletion}
               ></Card>
             );

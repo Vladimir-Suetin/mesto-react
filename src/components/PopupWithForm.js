@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit, submitButton}) {
+function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit, submitButtonState}) {
 
   return (
     <div className={`popup popup_type_${name} ${isOpen && 'popup_opened'}`}>
@@ -8,8 +8,8 @@ function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit, submi
         <h3 className='popup__title'>{title}</h3>
         <form name={`popup_${name}`} className={`popup__container popup__container_edit_${name}`} onSubmit={onSubmit}>
           {children}
-          <button type='submit' className={`popup__submit-button ${submitButton.disabled && 'popup__submit-button_disabled'}`} disabled={submitButton.disabled ? true : false}>
-            {submitButton.text}
+          <button type='submit' className={`popup__submit-button ${submitButtonState.disabled && 'popup__submit-button_disabled'}`} disabled={submitButtonState.disabled ? true : false}>
+            {submitButtonState.text}
           </button>
         </form>
         <button type='button' className='popup__close-icon' aria-label='закрыть форму' onClick={onClose}></button>

@@ -1,7 +1,7 @@
-.Spinner {
+.spinner {
   position: absolute;
-  top: calc(50%);
-  left: calc(50%);
+  top: 60%;
+  left: 50%;
   width: 64px;
   height: 64px;
   background-color: black;
@@ -9,7 +9,7 @@
   perspective: 800px;
 }
 
-.Spinner-line {
+.spinner-line {
   position: absolute;
   box-sizing: border-box;
   width: 100%;
@@ -17,21 +17,21 @@
   border-radius: 50%;
 }
 
-.Spinner-line.one {
+.spinner-line.one {
   left: 0%;
   top: 0%;
   animation: rotate-one 1s linear infinite;
   border-bottom: 3px solid #efeffa;
 }
 
-.Spinner-line.two {
+.spinner-line.two {
   right: 0%;
   top: 0%;
   animation: rotate-two 1s linear infinite;
   border-right: 3px solid #efeffa;
 }
 
-.Spinner-line.three {
+.spinner-line.three {
   right: 0%;
   bottom: 0%;
   animation: rotate-three 1s linear infinite;
