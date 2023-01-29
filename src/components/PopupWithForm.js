@@ -1,33 +1,25 @@
 import React from 'react';
 
 function PopupWithForm({ title, name, children, isOpen, onClose, onSubmit, submitButtonState }) {
-  const drawerRef = React.useRef();
-
   React.useEffect(() => {
-    if (drawerRef && isOpen) {
-      drawerRef.current.focus();
+    function handleEscapeKey(evt) {
+      if (evt.key === 'Escape') {
+        onClose();
+      }
     }
-  }, [drawerRef, isOpen]);
 
-  function handleOnMouseDown(evt) {
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
+  }, [onClose]);
+
+  function handleOverlayClick(evt) {
     if (evt.target === evt.currentTarget) {
       onClose();
     }
   }
 
-  function handleClickEscape(evt) {
-    console.log('pppp');
-    if (evt.key === 'Escape') {
-      onClose();
-    }
-  }
   return (
-    <div
-      className={`popup popup_type_${name} ${isOpen && 'popup_opened'}`}
-      onMouseDown={handleOnMouseDown}
-      onKeyDown={handleClickEscape}
-      ref={drawerRef}
-    >
+    <div className={`popup popup_type_${name} ${isOpen && 'popup_opened'}`} onMouseDown={handleOverlayClick}>
       <div className='popup__info'>
         <h3 className='popup__title'>{title}</h3>
         <form name={`popup_${name}`} className={`popup__container popup__container_edit_${name}`} onSubmit={onSubmit}>

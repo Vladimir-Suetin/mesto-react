@@ -2,10 +2,10 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
 
 function ConfirmDeletePopup({ isOpen, onClose, submitButtonState, onSubmitButton, removeCard }) {
-function handleSubmitDeleteCard(evt) {
-  evt.preventDefault();
-  onSubmitButton(removeCard);
-}
+  function handleSubmitDeleteCard(evt) {
+    evt.preventDefault();
+    onSubmitButton(removeCard);
+  }
 
   return (
     <PopupWithForm

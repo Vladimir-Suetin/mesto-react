@@ -23,7 +23,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState(defaultUserData);
-  const [removeCard, setRemoveCard] = useState({})
+  const [removeCard, setRemoveCard] = useState({});
 
   // Состояние загрузки страницы
   const [isLoading, setIsLoading] = useState(true);
@@ -171,7 +171,7 @@ function App() {
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <ConfirmDeletePopup
-        removeCard={removeCard}
+          removeCard={removeCard}
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmitButton={handleCardDelete}
