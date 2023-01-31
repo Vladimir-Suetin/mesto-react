@@ -58,9 +58,9 @@ function App() {
 
   // Функция обработчик добавления новой карточки
   function handleAddPlaceSubmit(data) {
+    setSubmitButtonState({ text: 'Сохранение...' });
     api.addNewCard(data).then((newCard) => {
       setCards([newCard, ...cards]);
-      setSubmitButtonState({ text: 'Сохранение...' });
       closeAllPopups();
     })
     .catch((err) => api.logResponseError(err))
@@ -69,11 +69,11 @@ function App() {
 
   // функция обработчик удаления карточки
   function handleCardDelete(cardId) {
+    setSubmitButtonState({ text: 'Удаление...' });
     api
       .deleteCard(cardId)
       .then(() => {
         setCards(cards.filter((card) => card._id !== cardId));
-        setSubmitButtonState({ text: 'Удаление...' });
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err))
@@ -82,11 +82,11 @@ function App() {
 
   // Функция обработки данных пользователя
   function handleUpdateUser(data) {
+    setSubmitButtonState({ text: 'Сохранение...' });
     api
       .setUserInfo(data)
       .then((res) => {
         setCurrentUser(res);
-        setSubmitButtonState({ text: 'Сохранение...' });
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err))
@@ -95,11 +95,11 @@ function App() {
 
   // Функция обработки аватара
   function handleUpdateAvatar(data) {
+    setSubmitButtonState({ text: 'Сохранение...' });
     api
       .changeAvatar(data)
       .then((res) => {
         setCurrentUser(res);
-        setSubmitButtonState({ text: 'Сохранение...' });
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err))
