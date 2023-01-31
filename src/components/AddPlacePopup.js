@@ -3,11 +3,10 @@ import PopupWithForm from './PopupWithForm';
 import { useForm } from '../hooks/useForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
-
-  const {values, handleChange, setValues} = useForm({image: '', link: ''});
+  const { values, handleChange, setValues } = useForm({ image: '', link: '' });
 
   React.useEffect(() => {
-    setValues({image: '', link: ''});
+    setValues({ image: '', link: '' });
   }, [isOpen]);
 
   function handleSubmit(evt) {
