@@ -25,7 +25,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, submitButtonState }) 
   // его данные будут использованы в управляемых компонентах.
   useEffect(() => {
     setValues({ name: currentUser.name, description: currentUser.about });
-  }, [currentUser, isOpen]);
+  }, [currentUser, isOpen, setValues]);
 
   return (
     <PopupWithForm

@@ -7,7 +7,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, submitButtonState }) {
 
   React.useEffect(() => {
     setValues({ image: '', link: '' });
-  }, [isOpen]);
+  }, [isOpen, setValues]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
