@@ -29,7 +29,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Состояние кнопки submit у форм
-  const [submitButtonState, setSubmitButtonState] = useState({ text: '', disabled: false });
+  const [textSubmitAddPlacePopup, setTextSubmitAddPlacePopup] = useState({ text: 'Создать', disabled: false });
+  const [textSubmitProfilePopup, setTextSubmitProfilePopup] = useState({ text: 'Сохранить', disabled: false });
+  const [textSubmitAvatarPopup, setTextSubmitAvatarPopup] = useState({ text: 'Создать', disabled: false });
+  const [textSubmitConfirmPopup, setTextSubmitConfirmPopup] = useState({ text: 'Да', disabled: false });
 
   // Получение данных пользователя и карточек
   useEffect(() => {
@@ -58,18 +61,20 @@ function App() {
 
   // Функция обработчик добавления новой карточки
   function handleAddPlaceSubmit(data) {
-    setSubmitButtonState({ text: 'Сохранение...' });
-    api.addNewCard(data).then((newCard) => {
-      setCards([newCard, ...cards]);
-      closeAllPopups();
-    })
-    .catch((err) => api.logResponseError(err))
-    .finally(() => setSubmitButtonState({ text: 'Создать' }))
+    setTextSubmitAddPlacePopup({ text: 'Сохранение...' });
+    api
+      .addNewCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => api.logResponseError(err))
+      .finally(() => setTextSubmitAddPlacePopup({ text: 'Создать' }));
   }
 
   // функция обработчик удаления карточки
   function handleCardDelete(cardId) {
-    setSubmitButtonState({ text: 'Удаление...' });
+    setTextSubmitConfirmPopup({ text: 'Удаление...' });
     api
       .deleteCard(cardId)
       .then(() => {
@@ -77,12 +82,12 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err))
-      .finally(() => setSubmitButtonState({ text: 'Да' }))
+      .finally(() => setTextSubmitConfirmPopup({ text: 'Да' }));
   }
 
   // Функция обработки данных пользователя
   function handleUpdateUser(data) {
-    setSubmitButtonState({ text: 'Сохранение...' });
+    setTextSubmitProfilePopup({ text: 'Сохранение...' });
     api
       .setUserInfo(data)
       .then((res) => {
@@ -90,12 +95,12 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err))
-      .finally(() => setSubmitButtonState({ text: 'Сохранить' }))
+      .finally(() => setTextSubmitProfilePopup({ text: 'Сохранить' }));
   }
 
   // Функция обработки аватара
   function handleUpdateAvatar(data) {
-    setSubmitButtonState({ text: 'Сохранение...' });
+    setTextSubmitAvatarPopup({ text: 'Сохранение...' });
     api
       .changeAvatar(data)
       .then((res) => {
@@ -103,7 +108,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => api.logResponseError(err))
-      .finally(() => setSubmitButtonState({ text: 'Создать' }))
+      .finally(() => setTextSubmitAvatarPopup({ text: 'Создать' }));
   }
 
   // Функции открытия/закрытия попапов
@@ -156,19 +161,19 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          submitButtonState={submitButtonState}
+          submitButtonState={textSubmitAvatarPopup}
         />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          submitButtonState={submitButtonState}
+          submitButtonState={textSubmitProfilePopup}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          submitButtonState={submitButtonState}
+          submitButtonState={textSubmitAddPlacePopup}
         />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <ConfirmDeletePopup
@@ -176,7 +181,7 @@ function App() {
           isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmitButton={handleCardDelete}
-          submitButtonState={submitButtonState}
+          submitButtonState={textSubmitConfirmPopup}
         />
       </div>
     </CurrentUserContext.Provider>
